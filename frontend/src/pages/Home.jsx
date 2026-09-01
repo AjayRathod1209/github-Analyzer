@@ -20,15 +20,6 @@ const Home = () => {
 
   return (
     <>
-      {showLogin && (
-        <button
-          onClick={() => navigate("/login")}
-          className="fixed top-5 right-6 z-50 rounded-lg border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-white transition hover:border-blue-400/50 hover:bg-white/10"
-        >
-          Login
-        </button>
-      )}
-
       <HomeContent />
     </>
   );
