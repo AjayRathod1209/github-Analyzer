@@ -1,97 +1,182 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Comparison = () => {
+import ComparisonSearch from "../components/ComparisonSearch";
+import ComparisonProfile from "../components/ComparisonProfile";
+import ComparisonStats from "../components/ComparisonStats";
+import ComparisonWinner from "../components/ComparisonWinner";
+import ComparisonLanguages from "../components/ComparisonLanguages";
+import ComparisonRepositories from "../components/ComparisonRepositories";
+
+import { getGithubUser, getGithubRepositories } from "../services/githubApi";
+
+const Comparision = () => {
   const navigate = useNavigate();
 
-  const [firstUsername, setFirstUsername] = useState("");
-  const [secondUsername, setSecondUsername] = useState("");
+  const [comparisonData, setComparisonData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSwap = () => {
-    setFirstUsername(secondUsername);
-    setSecondUsername(firstUsername);
+  const handleCompare = async ({ firstUsername, secondUsername }) => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const [firstUser, secondUser] = await Promise.all([
+        getGithubUser(firstUsername.trim()),
+        getGithubUser(secondUsername.trim()),
+      ]);
+
+      const [firstRepositories, secondRepositories] = await Promise.all([
+        getGithubRepositories(firstUsername.trim()),
+        getGithubRepositories(secondUsername.trim()),
+      ]);
+
+      const getLanguages = (repositories) => {
+        const counts = repositories.reduce((result, repo) => {
+          if (repo.language) {
+            result[repo.language] = (result[repo.language] || 0) + 1;
+          }
+
+          return result;
+        }, {});
+
+        const total = Object.values(counts).reduce(
+          (sum, count) => sum + count,
+          0,
+        );
+
+        if (!total) return [];
+
+        return Object.entries(counts)
+          .map(([name, count]) => ({
+            name,
+            percentage: Math.round((count / total) * 100),
+          }))
+          .sort((a, b) => b.percentage - a.percentage);
+      };
+
+      setComparisonData({
+        firstUser,
+        secondUser,
+        firstRepositories,
+        secondRepositories,
+        firstLanguages: getLanguages(firstRepositories),
+        secondLanguages: getLanguages(secondRepositories),
+      });
+    } catch (error) {
+      setError(error.message);
+      setComparisonData(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCompare = () => {
-    console.log(firstUsername, secondUsername);
-  };
+  const firstStars =
+    comparisonData?.firstRepositories.reduce(
+      (total, repo) => total + repo.stargazers_count,
+      0,
+    ) || 0;
+
+  const secondStars =
+    comparisonData?.secondRepositories.reduce(
+      (total, repo) => total + repo.stargazers_count,
+      0,
+    ) || 0;
 
   return (
-    <main className="min-h-screen w-full px-5 pt-8 sm:px-8 sm:pt-10 md:px-12">
-      {/* Back Button */}
+    <main className="min-h-screen w-full px-5 py-8 sm:px-8 lg:px-12">
+      {/* Back */}
       <button
         onClick={() => navigate("/")}
-        className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition-all duration-300 hover:border-blue-400/50 hover:bg-white/10 hover:shadow-lg hover:shadow-blue-500/10"
+        className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition-all duration-300 hover:border-blue-400/50 hover:bg-white/10"
       >
         ← Back
       </button>
 
-      {/* Heading */}
-      <section className="mx-auto mt-14 flex max-w-4xl flex-col items-center text-center sm:mt-16 md:mt-10">
-        <h1 className="text-4xl font-extrabold tracking-tight bg-linear-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-lg sm:text-5xl md:text-6xl">
-          Compare GitHub Profiles
-        </h1>
+      {/* Header */}
+      <section className="mx-auto mt-10 w-full max-w-7xl">
+        <div className="text-center">
+          <h1 className="bg-linear-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-4xl font-extrabold text-transparent sm:text-5xl md:text-6xl">
+            Compare GitHub Profiles
+          </h1>
 
-        <p className="mt-5 text-base leading-relaxed text-gray-400 sm:text-lg">
-          Compare two developers side-by-side with detailed metrics
-        </p>
-
-        {/* Comparison Box */}
-        <div className="mt-2 w-full max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/10 sm:p-7">
-          {/* Inputs */}
-          <div className="grid grid-cols-1 items-end gap-5 md:grid-cols-[1fr_auto_1fr]">
-            {/* Developer 1 */}
-            <div className="order-1 w-full md:order-1">
-              <label className="mb-2 block text-sm font-semibold tracking-wide text-gray-400">
-                DEVELOPER 1
-              </label>
-
-              <input
-                type="text"
-                value={firstUsername}
-                onChange={(e) => setFirstUsername(e.target.value)}
-                placeholder="Enter first username..."
-                className="w-full rounded-xl border border-white/10 bg-[#111827] px-4 py-3 text-white outline-none transition-all duration-300 placeholder:text-gray-500 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/10 focus:border-green-500 focus:shadow-lg focus:shadow-green-500/10"
-              />
-            </div>
-
-            {/* Developer 2 */}
-            <div className="order-2 w-full md:order-3">
-              <label className="mb-2 block text-sm font-semibold tracking-wide text-gray-400">
-                DEVELOPER 2
-              </label>
-
-              <input
-                type="text"
-                value={secondUsername}
-                onChange={(e) => setSecondUsername(e.target.value)}
-                placeholder="Enter second username..."
-                className="w-full rounded-xl border border-white/10 bg-[#111827] px-4 py-3 text-white outline-none transition-all duration-300 placeholder:text-gray-500 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/10 focus:border-green-500 focus:shadow-lg focus:shadow-green-500/10"
-              />
-            </div>
-
-            {/* Swap Button */}
-            <button
-              onClick={handleSwap}
-              className="order-3 mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-green-500 bg-green-500/10 text-xl text-green-400 transition-all duration-300 hover:bg-green-500/20 hover:shadow-lg hover:shadow-green-500/20 md:order-2"
-              title="Swap developers"
-            >
-              ⇄
-            </button>
-          </div>
-
-          {/* Compare Button */}
-          <button
-            onClick={handleCompare}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 py-4 font-bold text-white transition-all duration-300 hover:bg-green-500 hover:shadow-lg hover:shadow-green-500/20"
-          >
-            COMPARE PROFILES
-            <span>›</span>
-          </button>
+          <p className="mt-4 text-gray-400">
+            Compare two developers side-by-side with detailed metrics
+          </p>
         </div>
+
+        {/* Search */}
+        <div className="flex justify-center">
+          <ComparisonSearch onCompare={handleCompare} loading={loading} />
+        </div>
+
+        {/* Error */}
+        {error && (
+          <p className="mt-4 text-center text-sm text-red-400">{error}</p>
+        )}
+
+        {/* Comparison Results */}
+        {comparisonData && (
+          <div className="mt-10 space-y-8">
+            {/* ROW 1 — Profiles + Winner */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+              <ComparisonProfile
+                user={comparisonData.firstUser}
+                repositories={comparisonData.firstRepositories}
+              />
+
+              <ComparisonWinner
+                firstUser={comparisonData.firstUser}
+                secondUser={comparisonData.secondUser}
+                firstStars={firstStars}
+                secondStars={secondStars}
+              />
+
+              <ComparisonProfile
+                user={comparisonData.secondUser}
+                repositories={comparisonData.secondRepositories}
+              />
+            </div>
+
+            {/* ROW 2 — Stats */}
+            <ComparisonStats
+              firstUser={comparisonData.firstUser}
+              secondUser={comparisonData.secondUser}
+              firstStars={firstStars}
+              secondStars={secondStars}
+            />
+
+            {/* ROW 3 — Languages */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <ComparisonLanguages
+                languages={comparisonData.firstLanguages}
+                title="Developer 1 Languages"
+              />
+
+              <ComparisonLanguages
+                languages={comparisonData.secondLanguages}
+                title="Developer 2 Languages"
+              />
+            </div>
+
+            {/* ROW 4 — Repositories */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <ComparisonRepositories
+                repositories={comparisonData.firstRepositories}
+                title="Developer 1 Repositories"
+              />
+
+              <ComparisonRepositories
+                repositories={comparisonData.secondRepositories}
+                title="Developer 2 Repositories"
+              />
+            </div>
+          </div>
+        )}
       </section>
     </main>
   );
 };
 
-export default Comparison;
+export default Comparision;
