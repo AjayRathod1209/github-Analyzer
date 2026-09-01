@@ -16,7 +16,7 @@ const Analyzer = () => {
     <main className="min-h-screen w-full px-5 py-8 sm:px-8 lg:px-12">
       {/* Back */}
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/home")}
         className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition-all duration-300 hover:border-blue-400/50 hover:bg-white/10"
       >
         ← Back
