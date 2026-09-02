@@ -39,7 +39,7 @@ const AIAnalysis = ({ analysis, loading, onAnalyze }) => {
   }
 
   return (
-    <div className="h-[520px] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+    <div className="h-\[520px] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/10 p-6">
         <div>
@@ -62,7 +62,7 @@ const AIAnalysis = ({ analysis, loading, onAnalyze }) => {
       </div>
 
       {/* Scrollable AI Content */}
-      <div className="ai-scrollbar h-[calc(520px-97px)] overflow-y-auto p-6 pr-4">
+      <div className="ai-scrollbar h-\[calc(520px-97px)] overflow-y-auto p-6 pr-4">
         {/* Summary */}
         <div className="rounded-xl border border-white/10 bg-black/10 p-4">
           <h3 className="font-semibold text-white">Summary</h3>
