@@ -17,22 +17,25 @@ const comparisonFeatures = [
 
 function HomeContent() {
   return (
-    <main className="w-full flex flex-col items-center px-25 py-8">
-      <div className="w-full max-w-7xl min-h-\[750px\] flex flex-col items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-14">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-linear-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-lg mb-8 leading-tight">
+    <main className="w-full px-4 py-6 sm:px-6 sm:py-8 md:px-8 lg:px-12 xl:px-16 2xl:px-24">
+      <div className="mx-auto flex min-h-[650px] w-full max-w-7xl flex-col items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-5 sm:min-h-[700px] sm:p-8 md:p-10 lg:p-12 xl:p-14">
+        {/* Heading */}
+        <div className="mb-8 w-full text-center sm:mb-10 md:mb-12">
+          <h1 className="mb-5 bg-linear-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-3xl font-extrabold leading-tight tracking-tight text-transparent drop-shadow-lg sm:text-4xl md:text-5xl lg:mb-8 lg:text-6xl">
             Analyze Your GitHub Profile with AI
           </h1>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">
+
+          <h2 className="mb-3 text-xl font-bold tracking-tight text-white sm:text-2xl md:text-3xl">
             Choose Your Path
           </h2>
-          <p className="text-sm sm:text-base leading-relaxed text-gray-400 tracking-wide">
+
+          <p className="mx-auto max-w-2xl text-sm leading-relaxed tracking-wide text-gray-400 sm:text-base">
             Analyze and compare GitHub developers with powerful insights
           </p>
         </div>
 
         {/* Cards */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 mb-3">
+        <div className="mb-8 grid w-full grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 md:gap-8 lg:mb-3 lg:gap-10">
           <ModeCard
             title="Profile Analyzer"
             description="Deep dive into a single developer's GitHub profile"
@@ -51,8 +54,11 @@ function HomeContent() {
             color="green"
           />
         </div>
+
         {/* Footer */}
-        <Footer />
+        <div className="w-full">
+          <Footer />
+        </div>
       </div>
     </main>
   );
