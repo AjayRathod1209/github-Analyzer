@@ -1,1 +1,19 @@
 @import "tailwindcss";
+/* AI Analysis scrollbar */
+.ai-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.ai-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.45);
+  border-radius: 10px;
+}
+
+.ai-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
