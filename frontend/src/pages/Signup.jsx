@@ -179,33 +179,6 @@ const Signup = () => {
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="my-5 flex items-center gap-4">
-          <div className="h-px flex-1 bg-white/10" />
-
-          <span className="text-xs text-gray-500">OR</span>
-
-          <div className="h-px flex-1 bg-white/10" />
-        </div>
-
-        {/* Google */}
-        <button
-          type="button"
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3 font-medium text-white transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-        >
-          <span className="text-lg">G</span>
-          Sign up with Google
-        </button>
-
-        {/* GitHub */}
-        <button
-          type="button"
-          className="mt-2.5 flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3 font-medium text-white transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-        >
-          <span className="text-lg">◉</span>
-          Sign up with GitHub
-        </button>
-
         {/* Login */}
         <p className="mt-5 text-center text-sm text-gray-400">
           Already have an account?{" "}
