@@ -1,16 +1,139 @@
-# React + Vite
+# GitHub Profile Analyzer 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application that analyzes GitHub developer profiles and provides meaningful insights through statistics, contribution activity, repository data, language breakdowns, profile comparison, and AI-powered analysis.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+### 🔐 Authentication
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- User Signup
+- User Login
+- JWT-based authentication
+- Protected routes
+- Logout functionality
+- Secure password hashing with bcrypt
+- MongoDB user storage
 
-## Expanding the ESLint configuration
+### 📊 GitHub Profile Analyzer
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Analyze a GitHub developer by entering their username.
+
+The analyzer provides:
+
+- GitHub profile information
+- Followers and following
+- Public repositories
+- Stars and forks
+- Programming language breakdown
+- Repository insights
+- Contribution statistics
+- Contribution activity graph
+- Most active repository
+- Total analyzed commits
+
+### ⚖️ GitHub Profile Comparison
+
+Compare two GitHub developers side-by-side.
+
+Comparison includes:
+
+- Profile information
+- Repository statistics
+- Stars and forks
+- Programming languages
+- Repository insights
+- Activity metrics
+
+### 🤖 AI-Powered GitHub Analysis
+
+The application uses Google's Gemini AI to analyze GitHub profiles and provide:
+
+- Overall profile score
+- Profile summary
+- Strengths
+- Weaknesses
+- Improvement recommendations
+
+The AI analysis is based only on the GitHub data collected by the application.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- JavaScript
+
+### Backend
+
+- Node.js
+- Express.js
+- REST API
+
+### Database
+
+- MongoDB
+- Mongoose
+
+### Authentication
+
+- JWT
+- bcryptjs
+
+### APIs & AI
+
+- GitHub REST API
+- Google Gemini API
+
+---
+
+## 🏗️ Project Structure
+
+```text
+github-analyzer/
+│
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   └── githubController.js
+│   │
+│   ├── models/
+│   │   └── User.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   └── githubRoutes.js
+│   │
+│   ├── services/
+│   │   ├── aiService.js
+│   │   └── githubService.js
+│   │
+│   ├── .env
+│   ├── server.js
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   └── package.json
+│
+├── .gitignore
+├── README.md
+└── package.json
+```
