@@ -1,15 +1,22 @@
+import "dotenv/config";
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-import githubRoutes from "./routes/githubRoutes.js";
 
-dotenv.config();
+import githubRoutes from "./routes/githubRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import connectDB from "./config/db.js";
 
 const app = express();
 
+// Connect to MongoDB
+connectDB();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({
     success: true,
@@ -17,7 +24,11 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// GitHub routes
 app.use("/api/github", githubRoutes);
+
+// Auth routes
+app.use("/api/auth", authRoutes);
 
 const PORT = 5000;
 
