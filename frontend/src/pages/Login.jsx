@@ -150,33 +150,6 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="my-6 flex items-center gap-4">
-          <div className="h-px flex-1 bg-white/10" />
-
-          <span className="text-xs text-gray-500">OR</span>
-
-          <div className="h-px flex-1 bg-white/10" />
-        </div>
-
-        {/* Google */}
-        <button
-          type="button"
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3.5 font-medium text-white transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-        >
-          <span className="text-lg">G</span>
-          Continue with Google
-        </button>
-
-        {/* GitHub */}
-        <button
-          type="button"
-          className="mt-3 flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 py-3.5 font-medium text-white transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-        >
-          <span className="text-lg">◉</span>
-          Continue with GitHub
-        </button>
-
         {/* Signup */}
         <p className="mt-7 text-center text-sm text-gray-400">
           Don't have an account?{" "}
