@@ -1,4 +1,4 @@
-const BACKEND_API = "http://localhost:5000/api/github";
+const BACKEND_API = "https://github-analyzer-6tx9.onrender.com/api/github";
 
 // Get GitHub user profile through our backend
 export const getGithubUser = async (username) => {
